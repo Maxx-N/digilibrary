@@ -1,2 +1,3 @@
-<p>authors-list works!</p>
-<app-author-item></app-author-item>
+<div class="list-group">
+    <app-author-item *ngFor="let author of authors" [author]="author"></app-author-item>
+</div>

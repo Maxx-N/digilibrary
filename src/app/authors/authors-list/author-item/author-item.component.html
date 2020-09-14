@@ -1,1 +1,10 @@
-<p>author-item works!</p>
+<a class="list-group-item list-group-item-action d-flex justify-content-around align-items-center">
+    <span>{{ author.firstName }} {{ author.lastName }}</span>
+    <span>
+    <img
+      [src]="author.imageUrl"
+      [alt]="author.firstName + ' ' + author.lastName"
+      class="img-responsive"
+      style="width: 5em;"
+  /></span>
+</a>
