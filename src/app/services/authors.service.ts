@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { Author } from '../models/author.model';
 import { Book } from '../models/book.model';
 import { BooksService } from './books.service';
 
 @Injectable({ providedIn: 'root' })
-export class AuthorsService  {
+export class AuthorsService {
+  selectedAuthor : Author;
+  selectedAuthorSubject: Subject<Author> = new Subject<Author>();
+
   private books: Book[] = this.booksService.books;
   private authors: Author[] = [
     new Author(
@@ -33,8 +37,7 @@ export class AuthorsService  {
 
   constructor(private booksService: BooksService) {}
 
-  getAuthors() : Author[] {
+  getAuthors(): Author[] {
     return this.authors.slice();
   }
-
 }

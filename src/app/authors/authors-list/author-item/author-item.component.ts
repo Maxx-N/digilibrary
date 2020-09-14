@@ -1,18 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Author } from 'src/app/models/author.model';
+import { AuthorsService } from 'src/app/services/authors.service';
 
 @Component({
   selector: 'app-author-item',
   templateUrl: './author-item.component.html',
-  styleUrls: ['./author-item.component.scss']
+  styleUrls: ['./author-item.component.scss'],
 })
-export class AuthorItemComponent implements OnInit {
-  @Input() author : Author;
+export class AuthorItemComponent {
+  @Input() author: Author;
 
-  constructor() { }
+  constructor(private authorsService: AuthorsService) {}
 
-  ngOnInit(): void {
+  onSelectAuthor(): void {
+    this.authorsService.selectedAuthor = this.author;
+    this.authorsService.selectedAuthorSubject.next(this.author);
   }
-
 }

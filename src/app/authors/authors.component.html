@@ -1,1 +1,8 @@
-<app-authors-list></app-authors-list>
+<div class="row">
+    <div class="col-md-5">
+        <app-authors-list></app-authors-list>
+    </div>
+    <div class="col-md-7" *ngIf="selectedAuthor">
+        <app-author-detail></app-author-detail>
+    </div>
+</div>

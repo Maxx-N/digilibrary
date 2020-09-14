@@ -1,1 +1,26 @@
-<p>author-detail works!</p>
+<div class="row">
+    <div class="col-xs-12">
+        <img [src]="author.imageUrl" [alt]="author.lastName" style="max-width: 200px" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="h1">{{ author.firstName }} {{ author.lastName }}</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="h4">Pays</div>
+        <p>{{ author.nationality }}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="h4">Livres</div>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let book of author.books">
+                {{ book.title }}
+            </li>
+        </ul>
+    </div>
+</div>

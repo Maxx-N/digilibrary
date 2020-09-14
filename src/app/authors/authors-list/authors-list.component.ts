@@ -11,7 +11,7 @@ import { AuthorsService } from 'src/app/services/authors.service';
 export class AuthorsListComponent implements OnInit {
   authors: Author[];
 
-  constructor(private authorsService: AuthorsService) {}
+  constructor(private authorsService : AuthorsService) {}
 
   ngOnInit(): void {
     this.authors = this.authorsService.getAuthors();
