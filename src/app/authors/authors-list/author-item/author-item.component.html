@@ -1,5 +1,8 @@
 <a class="list-group-item list-group-item-action d-flex justify-content-around align-items-center">
-    <span>{{ author.firstName }} {{ author.lastName }}</span>
+    <div>
+        <div class="text-center list-group-item-heading">{{ author.firstName }} {{ author.lastName }}</div>
+        <div class="text-center list-group-item-text">{{author.nationality}}</div>
+    </div>
     <span>
     <img
       [src]="author.imageUrl"
