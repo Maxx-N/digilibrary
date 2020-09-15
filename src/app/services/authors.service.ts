@@ -29,7 +29,7 @@ export class AuthorsService {
     new Author(
       'Robin',
       'Hobb',
-      'USA',
+      'Etats-Unis',
       [this.books[3]],
       'https://img.20mn.fr/aDKy2B05Rx269DluYcCV5w/830x532_autrice-fantasy-robin-hobb-18-mars-2018.jpg'
     ),

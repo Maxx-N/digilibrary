@@ -14,9 +14,25 @@ import { ReadingListComponent } from './books/reading-list/reading-list.componen
 import { BookItemComponent } from './books/books-shared/book-item/book-item.component';
 import { BookDetailComponent } from './books/books-shared/book-detail/book-detail.component';
 import { BookEditComponent } from './books/books-shared/book-edit/book-edit.component';
+import { DropdownDirective } from './directives/dropdown.directive';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, AuthorsComponent, AuthorsListComponent, AuthorItemComponent, AuthorDetailComponent, AuthorEditComponent, BooksComponent, BooksListComponent, ReadingListComponent, BookItemComponent, BookDetailComponent, BookEditComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    AuthorsComponent,
+    AuthorsListComponent,
+    AuthorItemComponent,
+    AuthorDetailComponent,
+    AuthorEditComponent,
+    BooksComponent,
+    BooksListComponent,
+    ReadingListComponent,
+    BookItemComponent,
+    BookDetailComponent,
+    BookEditComponent,
+    DropdownDirective,
+  ],
   imports: [BrowserModule],
   providers: [],
   bootstrap: [AppComponent],
