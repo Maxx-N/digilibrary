@@ -50,4 +50,10 @@ export class BooksService {
   getBooks(): Book[] {
     return this.books.slice();
   }
+
+  getBooksChronologically(): Book[] {
+    return this.getBooks().sort((book1, book2) => {
+      return book1.year > book2.year ? -1 : +1;
+    });
+  }
 }
