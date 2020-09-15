@@ -7,7 +7,7 @@ import { BooksService } from './books.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthorsService {
-  selectedAuthor : Author;
+  selectedAuthor: Author;
   selectedAuthorSubject: Subject<Author> = new Subject<Author>();
 
   private books: Book[] = this.booksService.getBooks();
@@ -39,5 +39,15 @@ export class AuthorsService {
 
   getAuthors(): Author[] {
     return this.authors.slice();
+  }
+
+  getSortedAuthors() : Author[] {
+    return this.getAuthors().sort((author1, author2) => {
+      return author1.lastName < author2.lastName
+        ? -1
+        : author1.lastName > author2.lastName
+        ? 1
+        : 0;
+    })
   }
 }

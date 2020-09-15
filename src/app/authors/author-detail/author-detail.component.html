@@ -1,26 +1,13 @@
-<div class="row">
-    <div class="col-xs-12">
-        <img [src]="author.imageUrl" [alt]="author.lastName" style="max-width: 200px" />
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="h1">{{ author.firstName }} {{ author.lastName }}</div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="h4">Pays</div>
-        <p>{{ author.nationality }}</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="h4">Livres</div>
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let book of author.books">
-                {{ book.title }}
-            </li>
-        </ul>
-    </div>
+<img [src]="author.imageUrl" [alt]="author.lastName" class="img-center" />
+
+<div class="text-center">
+    <div class="h3 font-weight-bold">{{ author.firstName }} {{ author.lastName }}</div>
+    <p class="font-italic font-weight-light">{{ author.nationality }}</p>
+
+    <!-- <div class="h6 font-weight-bold">Livres</div> -->
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let book of sortedAuthorSBooks">
+            {{ book.title }} ({{ book.year }})
+        </li>
+    </ul>
 </div>
