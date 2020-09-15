@@ -1,15 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd">
     <a class="navbar-brand">DigiLibrary</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button (click)="collapsed = !collapsed" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div class="navbar-collapse" [ngClass]="{ collapse: collapsed }" (window:resize)="collapsed = true">
         <ul class="navbar-nav">
-            <li class="nav-item" [ngClass]="{'active': loadedComponent === 'authors'}">
+            <li class="nav-item" [ngClass]="{ active: loadedComponent === 'authors' }">
                 <a class="nav-link" (click)="onSelectComponent('authors')" style="cursor: pointer">Auteurs</a
         >
       </li>
-      <li class="nav-item" [ngClass]="{'active': loadedComponent === 'books'}">
+      <li class="nav-item" [ngClass]="{ active: loadedComponent === 'books' }">
         <a
           class="nav-link"
           (click)="onSelectComponent('books')"

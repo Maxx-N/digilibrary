@@ -8,6 +8,7 @@ import { HeaderService } from '../services/header.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  collapsed = true;
   loadedComponent: string = this.headerService.loadedComponent;
 
   constructor(private headerService: HeaderService) {}
