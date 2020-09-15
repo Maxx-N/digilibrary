@@ -1,1 +1,3 @@
-<app-authors></app-authors>
+<app-header></app-header>
+<app-authors *ngIf="loadedComponent==='authors'"></app-authors>
+<app-books *ngIf="loadedComponent==='books'"></app-books>
