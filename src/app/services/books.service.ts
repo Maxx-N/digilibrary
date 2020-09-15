@@ -4,7 +4,7 @@ import { Book } from '../models/book.model';
 
 @Injectable({ providedIn: 'root' })
 export class BooksService {
-  books: Book[] = [
+  private books: Book[] = [
     new Book(
       'Les Misérables',
       1862,
@@ -42,4 +42,8 @@ export class BooksService {
       'https://static.fnac-static.com/multimedia/Images/FR/NR/33/1b/55/5577523/1540-1/tsp20160704172754/Premiere-epoque.jpg'
     ),
   ];
+
+  getBooks() : Book[] {
+    return this.books.slice();
+  }
 }
