@@ -7,6 +7,7 @@ constructor (
   public category : string,
   public isToRead : boolean,
   public isFinished : boolean,
+  public synopsis : string,
   public imageUrl : string,
 
 ) {}
