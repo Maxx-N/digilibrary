@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Author } from '../models/author.model';
 import { AuthorsService } from '../services/authors.service';
 
@@ -10,11 +11,14 @@ import { AuthorsService } from '../services/authors.service';
 export class AuthorsComponent implements OnInit {
   selectedAuthor: Author;
 
-  constructor(private authorsService: AuthorsService) {}
+  constructor(
+    private authorsService: AuthorsService,
+  ) {}
 
   ngOnInit(): void {
-    this.authorsService.selectedAuthorSubject.subscribe(author => {
+    this.authorsService.selectedAuthorSubject.subscribe((author) => {
       this.selectedAuthor = author;
-    })
+    });
+
   }
 }
