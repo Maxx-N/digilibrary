@@ -1,13 +1,15 @@
-<a (click)="onSelectAuthor()" class="list-group-item list-group-item-action d-flex justify-content-around align-items-center" style="cursor: pointer;">
+<a (click)="onSelectAuthor()" [ngClass]="{ active: selectedAuthor === author }" class="list-group-item list-group-item-action d-flex justify-content-around align-items-center" style="cursor: pointer">
     <div>
-        <div class="text-center list-group-item-heading">{{ author.firstName }} {{ author.lastName }}</div>
-        <div class="text-center list-group-item-text">{{author.nationality}}</div>
+        <div class="text-center list-group-item-heading">
+            {{ author.firstName }} {{ author.lastName }}
+        </div>
+        <div class="text-center list-group-item-text">{{ author.nationality }}</div>
     </div>
     <span>
     <img
       [src]="author.imageUrl"
       [alt]="author.firstName + ' ' + author.lastName"
       class="img-responsive"
-      style="width: 3em;"
+      style="width: 3em"
   /></span>
 </a>

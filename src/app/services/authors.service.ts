@@ -10,7 +10,7 @@ export class AuthorsService {
   selectedAuthor : Author;
   selectedAuthorSubject: Subject<Author> = new Subject<Author>();
 
-  private books: Book[] = this.booksService.books;
+  private books: Book[] = this.booksService.getBooks();
   private authors: Author[] = [
     new Author(
       'Victor',

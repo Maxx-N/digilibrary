@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Author } from 'src/app/models/author.model';
 import { AuthorsService } from 'src/app/services/authors.service';
@@ -8,10 +8,17 @@ import { AuthorsService } from 'src/app/services/authors.service';
   templateUrl: './author-item.component.html',
   styleUrls: ['./author-item.component.scss'],
 })
-export class AuthorItemComponent {
+export class AuthorItemComponent implements OnInit {
   @Input() author: Author;
+  selectedAuthor : Author;
 
   constructor(private authorsService: AuthorsService) {}
+
+  ngOnInit() : void {
+    this.authorsService.selectedAuthorSubject.subscribe(author => {
+      this.selectedAuthor = author;
+    })
+  }
 
   onSelectAuthor(): void {
     this.authorsService.selectedAuthor = this.author;

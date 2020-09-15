@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { Book } from '../models/book.model';
 
 @Injectable({ providedIn: 'root' })
 export class BooksService {
+  selectedBook: Book;
+  selectedBookSubject: Subject<Book> = new Subject<Book>();
+
   private books: Book[] = [
     new Book(
       'Les Misérables',
@@ -43,7 +47,7 @@ export class BooksService {
     ),
   ];
 
-  getBooks() : Book[] {
+  getBooks(): Book[] {
     return this.books.slice();
   }
 }
