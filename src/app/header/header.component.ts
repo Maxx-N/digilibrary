@@ -7,10 +7,18 @@ import { HeaderService } from '../services/header.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  loadedComponent: string = this.headerService.loadedComponent;
 
-  constructor(private headerService : HeaderService) {}
+  constructor(private headerService: HeaderService) {}
 
-  onSelectComponent(component : string) {
-    this.headerService.loadedComponentSubject.next(component);  }
+  ngOnInit(): void {
+    this.headerService.loadedComponentSubject.subscribe((component) => {
+      this.loadedComponent = component;
+    });
+  }
+
+  onSelectComponent(component: string) {
+    this.headerService.loadedComponentSubject.next(component);
+  }
 }
