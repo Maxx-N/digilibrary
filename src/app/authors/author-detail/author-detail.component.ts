@@ -12,7 +12,7 @@ import { HeaderService } from 'src/app/services/header.service';
   styleUrls: ['./author-detail.component.scss'],
 })
 export class AuthorDetailComponent implements OnInit {
-  author: Author;
+  author: Author = this.authorsService.selectedAuthor;;
   sortedAuthorSBooks: Book[];
 
   constructor(
@@ -22,7 +22,6 @@ export class AuthorDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.author = this.authorsService.selectedAuthor;
     this.sortedAuthorSBooks = this.author.books.sort((book1, book2) => {
       return book1.year < book2.year ? +1 : book1.year > book2.year ? -1 : 0;
     });

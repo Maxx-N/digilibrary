@@ -2,7 +2,12 @@
     <div class="col-md-5">
         <app-authors-list></app-authors-list>
     </div>
-    <div class="col-md-7" *ngIf="selectedAuthor">
-        <app-author-detail></app-author-detail>
+    <div class="col-md-7">
+        <app-author-detail *ngIf="selectedAuthor; else noAuthorSelected"></app-author-detail>
+        <ng-template #noAuthorSelected>
+            <p style="margin-top: 20%" class="text-center font-italic">
+                Please select an author ...
+            </p>
+        </ng-template>
     </div>
 </div>

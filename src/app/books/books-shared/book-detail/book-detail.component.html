@@ -2,7 +2,7 @@
 
 <div class="text-center">
     <div class="h3 font-weight-bold">{{ book.title }}</div>
-    <p *ngIf="author">de <span class="font-weight-bold"> {{ author.firstName }} {{ author.lastName }}</span></p>
+    <p *ngIf="author">de <span (click)="onDisplayBookAuthor()" style="cursor: pointer;" class="font-weight-bold"> {{ author.firstName }} {{ author.lastName }}</span></p>
     <p class="font-italic font-weight-light">
         {{book.year}}
     </p>

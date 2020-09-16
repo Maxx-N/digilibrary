@@ -9,7 +9,7 @@ import { AuthorsService } from '../services/authors.service';
   styleUrls: ['./authors.component.scss'],
 })
 export class AuthorsComponent implements OnInit {
-  selectedAuthor: Author;
+  selectedAuthor: Author = this.authorsService.selectedAuthor;
 
   constructor(
     private authorsService: AuthorsService,

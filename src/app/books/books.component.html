@@ -3,6 +3,11 @@
         <app-books-list></app-books-list>
     </div>
     <div class="col-md-7">
-        <app-book-detail *ngIf="selectedBook"></app-book-detail>
+        <app-book-detail *ngIf="selectedBook; else noBookSelected"></app-book-detail>
+        <ng-template #noBookSelected>
+            <p style="margin-top: 20%" class="text-center font-italic">
+                Please select a book ...
+            </p>
+        </ng-template>
     </div>
 </div>

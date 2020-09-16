@@ -10,14 +10,14 @@ import { AuthorsService } from 'src/app/services/authors.service';
 })
 export class AuthorItemComponent implements OnInit {
   @Input() author: Author;
-  selectedAuthor : Author;
+  selectedAuthor: Author = this.authorsService.selectedAuthor;
 
   constructor(private authorsService: AuthorsService) {}
 
-  ngOnInit() : void {
-    this.authorsService.selectedAuthorSubject.subscribe(author => {
+  ngOnInit(): void {
+    this.authorsService.selectedAuthorSubject.subscribe((author) => {
       this.selectedAuthor = author;
-    })
+    });
   }
 
   onSelectAuthor(): void {
