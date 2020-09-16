@@ -12,7 +12,7 @@ import { AuthorsService } from 'src/app/services/authors.service';
 })
 export class BookItemComponent implements OnInit {
   @Input() book: Book;
-  selectedBook: Book;
+  selectedBook: Book = this.booksService.selectedBook;
   author: Author;
 
   constructor(
@@ -25,7 +25,11 @@ export class BookItemComponent implements OnInit {
       this.selectedBook = book;
     });
 
-    if (this.authorsService.getAuthors().find((author) => author.books.includes(this.book))) {
+    if (
+      this.authorsService
+        .getAuthors()
+        .find((author) => author.books.includes(this.book))
+    ) {
       this.author = this.authorsService.getAuthors().find((author) => {
         return author.books.includes(this.book);
       });

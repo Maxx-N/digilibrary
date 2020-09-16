@@ -9,7 +9,7 @@ import { BooksService } from '../services/books.service';
   styleUrls: ['./books.component.scss'],
 })
 export class BooksComponent implements OnInit {
-  selectedBook: Book;
+  selectedBook: Book = this.booksService.selectedBook;
 
   constructor(private booksService: BooksService) {}
 
