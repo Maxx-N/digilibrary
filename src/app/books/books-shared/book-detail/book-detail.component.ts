@@ -50,4 +50,8 @@ export class BookDetailComponent implements OnInit {
     this.authorsService.selectedAuthor = this.author;
     // this.authorsService.selectedAuthorSubject.next(this.author);
   }
+
+  onToggleReadingList(): void {
+    this.book.isToRead = !this.book.isToRead;
+  }
 }

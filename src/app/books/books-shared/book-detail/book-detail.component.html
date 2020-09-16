@@ -2,10 +2,26 @@
 
 <div class="text-center">
     <div class="h3 font-weight-bold">{{ book.title }}</div>
-    <p *ngIf="author">de <span (click)="onDisplayBookAuthor()" style="cursor: pointer;" class="font-weight-bold"> {{ author.firstName }} {{ author.lastName }}</span></p>
-    <p class="font-italic font-weight-light">
-        {{book.year}}
-    </p>
-    <p>{{book.category}}</p>
-    <p class="text-justify">{{book.synopsis}}</p>
+    <p *ngIf="author">
+        de
+        <span (click)="onDisplayBookAuthor()" style="cursor: pointer" class="font-weight-bold">
+      {{ author.firstName }} {{ author.lastName }}</span
+    >
+  </p>
+  <p class="font-italic font-weight-light">
+    {{ book.year }}
+  </p>
+  <button
+    class="btn"
+    [ngClass]="{ 'btn-info': !book.isToRead, 'btn-danger': !!book.isToRead }"
+    (click)="onToggleReadingList()"
+  >
+    <span *ngIf="!book.isToRead"> Ajouter à ma liste </span>
+        <span *ngIf="book.isToRead">Retirer de ma liste</span>
+        </button>
+
+        <article>
+            <p>{{ book.category }}</p>
+            <p class="text-justify">{{ book.synopsis }}</p>
+        </article>
 </div>
