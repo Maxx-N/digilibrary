@@ -12,20 +12,34 @@ import { AuthorsService } from 'src/app/services/authors.service';
 })
 export class BookDetailComponent implements OnInit {
   book: Book;
-  author : Author;
+  author: Author;
 
-  constructor(private booksService: BooksService, private authorsService : AuthorsService) {}
+  constructor(
+    private booksService: BooksService,
+    private authorsService: AuthorsService
+  ) {}
 
   ngOnInit(): void {
     this.book = this.booksService.selectedBook;
+    this.author = this.getBookAuthor(this.book);
+
     this.booksService.selectedBookSubject.subscribe((book) => {
       this.book = book;
+      this.author = this.getBookAuthor(book);
     });
+  }
 
-    if (this.authorsService.getAuthors().find((author) => author.books.includes(this.book))) {
-      this.author = this.authorsService.getAuthors().find((author) => {
-        return author.books.includes(this.book);
+  getBookAuthor(book: Book): Author {
+    if (
+      this.authorsService
+        .getAuthors()
+        .find((author) => author.books.includes(book))
+    ) {
+      return this.author = this.authorsService.getAuthors().find((author) => {
+        return author.books.includes(book);
       });
+    } else {
+      return null;
     }
   }
 }
