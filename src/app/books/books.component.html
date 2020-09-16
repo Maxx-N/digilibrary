@@ -1,6 +1,13 @@
+<ul class="nav nav-tabs">
+    <li style="cursor: pointer" *ngFor="let choice of ['Tous', 'A lire']" [ngClass]="{ active: booksToLoad === choice }" class="nav-link" (click)="onSelectBooksToLoad(choice)">
+        {{ choice }}
+    </li>
+</ul>
+
 <div class="row">
     <div class="col-md-5">
-        <app-books-list></app-books-list>
+        <app-books-list *ngIf="booksToLoad === 'Tous'"></app-books-list>
+        <app-reading-list *ngIf="booksToLoad === 'A lire'"></app-reading-list>
     </div>
     <div class="col-md-7">
         <app-book-detail *ngIf="selectedBook; else noBookSelected"></app-book-detail>

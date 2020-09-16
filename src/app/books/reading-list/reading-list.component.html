@@ -1,4 +1,3 @@
-<p>reading-list works!</p>
-<app-book-item></app-book-item>
-<app-book-detail></app-book-detail>
-<app-book-edit></app-book-edit>
+<div class="list-group">
+    <app-book-item *ngFor="let book of books" [book]="book"></app-book-item>
+</div>

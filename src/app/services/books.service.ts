@@ -31,7 +31,7 @@ export class BooksService {
       "L'Enigme de la chambre 622",
       2020,
       'Policier',
-      false,
+      true,
       false,
       'Une nuit de décembre, un meurtre a lieu au Palace de Verbier, dans les Alpes suisses. L’enquête de police n’aboutira jamais. Des années plus tard, au début de l’été 2018, lorsqu’un écrivain se rend dans ce même hôtel pour y passer des vacances, il est loin d’imaginer qu’il va se retrouver plongé dans cette affaire. Que s’est-il passé dans la chambre 622 du Palace de Verbier?',
       'https://images-na.ssl-images-amazon.com/images/I/41FhoGm9LJL._SX342_BO1,204,203,200_.jpg'
@@ -55,5 +55,11 @@ export class BooksService {
     return this.getBooks().sort((book1, book2) => {
       return book1.year > book2.year ? -1 : +1;
     });
+  }
+
+  getBooksToRead(): Book[] {
+    return this.getBooksChronologically().filter(book => {
+      return !!book.isToRead;
+    })
   }
 }

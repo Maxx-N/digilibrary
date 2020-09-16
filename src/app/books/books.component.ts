@@ -10,6 +10,7 @@ import { BooksService } from '../services/books.service';
 })
 export class BooksComponent implements OnInit {
   selectedBook: Book = this.booksService.selectedBook;
+  booksToLoad: string = 'Tous';
 
   constructor(private booksService: BooksService) {}
 
@@ -18,4 +19,9 @@ export class BooksComponent implements OnInit {
       this.selectedBook = book;
     });
   }
+
+  onSelectBooksToLoad(choice: string, event): void {
+    this.booksToLoad = choice;
+  }
+
 }
