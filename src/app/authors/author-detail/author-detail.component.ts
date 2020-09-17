@@ -12,7 +12,7 @@ import { HeaderService } from 'src/app/services/header.service';
   styleUrls: ['./author-detail.component.scss'],
 })
 export class AuthorDetailComponent implements OnInit {
-  author: Author = this.authorsService.selectedAuthor;;
+  author: Author = this.authorsService.selectedAuthor;
   sortedAuthorSBooks: Book[];
 
   constructor(
@@ -27,10 +27,16 @@ export class AuthorDetailComponent implements OnInit {
     });
 
     this.authorsService.selectedAuthorSubject.subscribe((author) => {
-      this.author = author;
-      this.sortedAuthorSBooks = author.books.sort((book1, book2) => {
-        return book1.year < book2.year ? +1 : book1.year > book2.year ? -1 : 0;
-      });
+      if (author) {
+        this.author = author;
+        this.sortedAuthorSBooks = author.books.sort((book1, book2) => {
+          return book1.year < book2.year
+            ? +1
+            : book1.year > book2.year
+            ? -1
+            : 0;
+        });
+      }
     });
   }
 

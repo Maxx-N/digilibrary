@@ -21,8 +21,7 @@ export class AuthorItemComponent implements OnInit {
   }
 
   onSelectAuthor(): void {
-    this.authorsService.selectedAuthor = this.author;
-    this.authorsService.selectedAuthorSubject.next(this.author);
+    this.authorsService.selectAuthor(this.author);
     this.authorsService.stopEditingAuthor();
   }
 }

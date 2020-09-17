@@ -59,6 +59,11 @@ export class AuthorsService {
     this.sortedAuthorsListSubject.next(this.getSortedAuthors());
   }
 
+  selectAuthor(author: Author): void {
+    this.selectedAuthor = author;
+    this.selectedAuthorSubject.next(author);
+  }
+
   unselectAuthor(): void {
     this.selectedAuthor = null;
     this.selectedAuthorSubject.next(null);
@@ -70,7 +75,9 @@ export class AuthorsService {
   }
 
   stopEditingAuthor(): void {
-    this.isEditingAuthor = false;
-    this.isEditingAuthorSubject.next(false);
+    if (this.selectedAuthor) {
+      this.isEditingAuthor = false;
+      this.isEditingAuthorSubject.next(false);
+    }
   }
 }

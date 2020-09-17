@@ -8,7 +8,7 @@
         <app-authors-list></app-authors-list>
     </div>
     <div class="col-md-7">
-        <div *ngIf="selectedAuthor || !!isEditingAuthor; else noAuthorSelected">
+        <div *ngIf="selectedAuthor || isEditingAuthor; else noAuthorSelected">
             <app-author-detail *ngIf="selectedAuthor && !isEditingAuthor"></app-author-detail>
             <app-author-edit *ngIf="!!isEditingAuthor"></app-author-edit>
         </div>
