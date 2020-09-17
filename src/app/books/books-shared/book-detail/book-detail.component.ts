@@ -52,6 +52,6 @@ export class BookDetailComponent implements OnInit {
   }
 
   onToggleReadingList(): void {
-    this.book.isToRead = !this.book.isToRead;
+    this.booksService.toggleReadingList(this.book);
   }
 }

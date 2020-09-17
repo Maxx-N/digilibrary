@@ -7,6 +7,7 @@ import { Book } from '../models/book.model';
 export class BooksService {
   selectedBook: Book;
   selectedBookSubject: Subject<Book> = new Subject<Book>();
+  readingListSubject: Subject<Book[]> = new Subject<Book[]>();
 
   private books: Book[] = [
     new Book(
@@ -58,8 +59,13 @@ export class BooksService {
   }
 
   getBooksToRead(): Book[] {
-    return this.getBooksChronologically().filter(book => {
+    return this.getBooksChronologically().filter((book) => {
       return !!book.isToRead;
-    })
+    });
+  }
+
+  toggleReadingList(book: Book): void {
+    book.isToRead = !book.isToRead;
+    this.readingListSubject.next(this.getBooksToRead());
   }
 }
