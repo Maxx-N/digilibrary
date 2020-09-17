@@ -1,3 +1,5 @@
 <app-header></app-header>
-<app-authors *ngIf="loadedComponent==='authors'"></app-authors>
-<app-books *ngIf="loadedComponent==='books'"></app-books>
+<div class="smaller-box">
+    <app-authors *ngIf="loadedComponent === 'authors'"></app-authors>
+    <app-books *ngIf="loadedComponent === 'books'"></app-books>
+</div>

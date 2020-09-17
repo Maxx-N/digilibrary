@@ -1,1 +1,19 @@
-<p>author-edit works!</p>
+<form [formGroup]="form" (submit)="onCreateAuthor()">
+    <div class="form-group">
+        <label for="first-name">Prénom</label>
+        <input id="first-name" type="text" class="form-control" formControlName="firstName" />
+    </div>
+    <div class="form-group">
+        <label for="last-name">Nom</label>
+        <input id="last-name" type="text" class="form-control" formControlName="lastName" />
+    </div>
+    <div class="form-group">
+        <label for="nationality">Pays</label>
+        <input id="nationality" type="text" class="form-control" formControlName="nationality" />
+    </div>
+    <div class="form-group">
+        <label for="image-url">URL de la photo</label>
+        <input id="image-url" type="text" class="form-control" formControlName="imageUrl" />
+    </div>
+    <button class="btn btn-success" type="submit">Ajouter</button>
+</form>

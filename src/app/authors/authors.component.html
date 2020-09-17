@@ -1,12 +1,20 @@
 <div class="row">
     <div class="col-md-5">
+        <div class="text-center">
+            <button class="btn btn-info" (click)="onAddAuthor()">
+        Ajouter un auteur
+      </button>
+        </div>
         <app-authors-list></app-authors-list>
     </div>
     <div class="col-md-7">
-        <app-author-detail *ngIf="selectedAuthor; else noAuthorSelected"></app-author-detail>
+        <div *ngIf="selectedAuthor || !!isEditingAuthor; else noAuthorSelected">
+            <app-author-detail *ngIf="selectedAuthor && !isEditingAuthor"></app-author-detail>
+            <app-author-edit *ngIf="!!isEditingAuthor"></app-author-edit>
+        </div>
         <ng-template #noAuthorSelected>
             <p style="margin-top: 20%" class="text-center font-italic">
-                Please select an author ...
+                Please select an author or add one...
             </p>
         </ng-template>
     </div>

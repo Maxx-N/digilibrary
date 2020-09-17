@@ -9,6 +9,9 @@ import { BooksService } from './books.service';
 export class AuthorsService {
   selectedAuthor: Author;
   selectedAuthorSubject: Subject<Author> = new Subject<Author>();
+  isEditingAuthor: boolean = false;
+  isEditingAuthorSubject: Subject<boolean> = new Subject<boolean>();
+  sortedAuthorsListSubject: Subject<Author[]> = new Subject<Author[]>();
 
   private books: Book[] = this.booksService.getBooks();
   private authors: Author[] = [
@@ -41,13 +44,33 @@ export class AuthorsService {
     return this.authors.slice();
   }
 
-  getSortedAuthors() : Author[] {
+  getSortedAuthors(): Author[] {
     return this.getAuthors().sort((author1, author2) => {
       return author1.lastName < author2.lastName
         ? -1
         : author1.lastName > author2.lastName
         ? 1
         : 0;
-    })
+    });
+  }
+
+  addAuthor(author: Author): void {
+    this.authors.push(author);
+    this.sortedAuthorsListSubject.next(this.getSortedAuthors());
+  }
+
+  unselectAuthor(): void {
+    this.selectedAuthor = null;
+    this.selectedAuthorSubject.next(null);
+  }
+
+  startEditingAuthor(): void {
+    this.isEditingAuthor = true;
+    this.isEditingAuthorSubject.next(true);
+  }
+
+  stopEditingAuthor(): void {
+    this.isEditingAuthor = false;
+    this.isEditingAuthorSubject.next(false);
   }
 }
