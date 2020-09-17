@@ -17,7 +17,6 @@ export class AuthorEditComponent implements OnInit {
     return (<FormArray>this.form.get('booksIndexes')).controls;
   }
   existingBooks: Book[] = this.booksService.getBooksChronologically();
-  // remainingBooks : Book[];
 
   constructor(
     private authorsService: AuthorsService,
@@ -25,7 +24,6 @@ export class AuthorEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.remainingBooks = this.existingBooks.slice();
     this.initForm();
   }
 
@@ -48,17 +46,38 @@ export class AuthorEditComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      let authorBooks: Book[] = [];
-      for (let index of this.form.value.booksIndexes) {
-        if (!authorBooks.includes(this.existingBooks[index])) {
-          authorBooks.push(this.existingBooks[index]);
+  setAuthorBooks(): Book[] {
+    const authorBooks: Book[] = [];
+
+    for (let index of this.form.value.booksIndexes) {
+      const book = this.existingBooks[index];
+      if (!authorBooks.includes(book)) {
+        const authorToReplace = this.authorsService
+          .getAuthors()
+          .find((author) => {
+            return author.books.includes(book);
+          });
+        if (authorToReplace) {
+          if (
+            confirm(
+              `Le livre \"${book.title}\" a déjà un auteur (${authorToReplace.firstName} ${authorToReplace.lastName}). Voulez-vous le remplacer?`
+            )
+          ) {
+            this.authorsService.removeBookFromItsAuthor(authorToReplace, book);
+            authorBooks.push(book);
+          }
+        } else {
+          authorBooks.push(book);
         }
       }
-      for (let book of authorBooks) {
-        this.authorsService.removeBookFromItsAuthor(book);
-      }
+    }
+
+    return authorBooks;
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      const authorBooks = this.setAuthorBooks();
 
       const author = new Author(
         this.form.value.firstName,
@@ -70,17 +89,19 @@ export class AuthorEditComponent implements OnInit {
 
       this.authorsService.addAuthor(author);
 
-      this.form.reset();
+      this.initForm();
     } else {
       alert('Formulaire invalide');
     }
   }
 
   onAddBookControl(): void {
-    // const i = this.form.value.booksIndexes[this.form.value.booksIndexes.length-1];
-    // const bookToRemove : Book = this.existingBooks[i];
-    // this.remainingBooks.splice(this.remainingBooks.indexOf(bookToRemove), 1);
+    (this.form.get('booksIndexes') as FormArray).push(
+      new FormControl(null, Validators.required)
+    );
+  }
 
-    (this.form.get('booksIndexes') as FormArray).push(new FormControl(null));
+  onRemoveBookControl(index): void {
+    (this.form.get('booksIndexes') as FormArray).removeAt(index);
   }
 }

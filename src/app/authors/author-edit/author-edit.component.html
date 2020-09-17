@@ -30,12 +30,23 @@
     </div>
     <div formArrayName="booksIndexes">
         <div class="form-group" *ngFor="let bookControl of booksControls; let i = index">
-            <select id="books" class="form-control" [formControlName]="i">
-        <!-- <option *ngFor="let book of remainingBooks" [value]="existingBooks.indexOf(book)"> -->
-        <option *ngFor="let book of existingBooks" [value]="existingBooks.indexOf(book)">
-          {{ book.title }} ({{ book.category }}, {{ book.year }})
-        </option>
-      </select>
+            <div class="row">
+                <div class="col-xs-10">
+                    <select id="books" class="form-control" [formControlName]="i">
+            <option
+              *ngFor="let book of existingBooks"
+              [value]="existingBooks.indexOf(book)"
+            >
+              {{ book.title }} ({{ book.category }}, {{ book.year }})
+            </option>
+          </select>
+                </div>
+                <div class="col-xs-2" style="margin-left: 4%">
+                    <button class="btn btn-danger" (click)="onRemoveBookControl(i)">
+            X
+          </button>
+                </div>
+            </div>
         </div>
     </div>
 </form>

@@ -2,6 +2,7 @@
     margin: 2%;
 }
 
-input.ng-touched.ng-invalid {
+input.ng-touched.ng-invalid,
+select.ng-touched.ng-invalid {
     border: solid 1px red;
 }

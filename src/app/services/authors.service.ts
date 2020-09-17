@@ -81,13 +81,7 @@ export class AuthorsService {
     }
   }
 
-  removeBookFromItsAuthor(book: Book) {
-    const author = this.authors.find((author) => {
-      return author.books.includes(book);
-    });
-
-    if (author) {
-      author.books.splice(author.books.indexOf(book), 1);
-    }
+  removeBookFromItsAuthor(author: Author, book: Book) {
+    author.books.splice(author.books.indexOf(book), 1);
   }
 }
