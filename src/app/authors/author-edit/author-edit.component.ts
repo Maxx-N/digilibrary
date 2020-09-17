@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Author } from 'src/app/models/author.model';
 import { AuthorsService } from 'src/app/services/authors.service';
@@ -11,9 +11,18 @@ import { AuthorsService } from 'src/app/services/authors.service';
 })
 export class AuthorEditComponent implements OnInit {
   form: FormGroup = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    nationality: new FormControl(''),
+    firstName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+    ]),
+    lastName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    nationality: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
     imageUrl: new FormControl(''),
   });
 
@@ -22,14 +31,21 @@ export class AuthorEditComponent implements OnInit {
   ngOnInit(): void {}
 
   onCreateAuthor(): void {
-    const author = new Author(
-      this.form.value.firstName,
-      this.form.value.lastName,
-      this.form.value.nationality,
-      [],
-      this.form.value.imageUrl
-    );
+    if (this.form.valid) {
+      const author = new Author(
+        this.form.value.firstName,
+        this.form.value.lastName,
+        this.form.value.nationality,
+        [],
+        this.form.value.imageUrl
+      );
 
-    this.authorsService.addAuthor(author);
+      this.authorsService.addAuthor(author);
+
+      this.form.reset();
+    } else {
+      alert('Formulaire invalide');
+    }
+
   }
 }

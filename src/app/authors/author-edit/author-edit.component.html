@@ -15,5 +15,8 @@
         <label for="image-url">URL de la photo</label>
         <input id="image-url" type="text" class="form-control" formControlName="imageUrl" />
     </div>
-    <button class="btn btn-success" type="submit">Ajouter</button>
+    <div class="text-center">
+        <button [disabled]="!form.valid" class="btn btn-success" type="submit">Ajouter</button>
+    </div>
+    <img *ngIf="form.value.imageUrl" class="img-center" [src]="form.value.imageUrl" alt="Aucune image ne correspond à cette URL" />
 </form>
