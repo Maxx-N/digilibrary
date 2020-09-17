@@ -4,7 +4,7 @@
     <div class="h3 font-weight-bold">{{ book.title }}</div>
     <p *ngIf="author">
         de
-        <span (click)="onDisplayBookAuthor()" style="cursor: pointer" class="font-weight-bold">
+        <span (click)="onDisplayBookAuthor()" class="font-weight-bold pointer">
       {{ author.firstName }} {{ author.lastName }}</span
     >
   </p>

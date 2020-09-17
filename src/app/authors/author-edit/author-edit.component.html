@@ -1,4 +1,11 @@
-<form [formGroup]="form" (submit)="onCreateAuthor()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <img *ngIf="form.value.imageUrl" class="img-center tiny-img" [src]="form.value.imageUrl" alt="Aucune image ne correspond à cette URL" />
+
+    <div class="text-center">
+        <button [disabled]="!form.valid" class="btn btn-success" type="submit">
+      Ajouter
+    </button>
+    </div>
     <div class="form-group">
         <label for="first-name">Prénom</label>
         <input id="first-name" type="text" class="form-control" formControlName="firstName" />
@@ -15,8 +22,20 @@
         <label for="image-url">URL de la photo</label>
         <input id="image-url" type="text" class="form-control" formControlName="imageUrl" />
     </div>
+
     <div class="text-center">
-        <button [disabled]="!form.valid" class="btn btn-success" type="submit">Ajouter</button>
+        <button type="button" class="btn btn-info" (click)="onAddBookControl()">
+      Attribuer un livre existant
+    </button>
     </div>
-    <img *ngIf="form.value.imageUrl" class="img-center" [src]="form.value.imageUrl" alt="Aucune image ne correspond à cette URL" />
+    <div formArrayName="booksIndexes">
+        <div class="form-group" *ngFor="let bookControl of booksControls; let i = index">
+            <select id="books" class="form-control" [formControlName]="i">
+        <!-- <option *ngFor="let book of remainingBooks" [value]="existingBooks.indexOf(book)"> -->
+        <option *ngFor="let book of existingBooks" [value]="existingBooks.indexOf(book)">
+          {{ book.title }} ({{ book.category }}, {{ book.year }})
+        </option>
+      </select>
+        </div>
+    </div>
 </form>

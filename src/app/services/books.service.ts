@@ -46,6 +46,15 @@ export class BooksService {
       "Bâtard du prince chevalerie, le jeune Fitz grandit dans l'ombre de la forteresse de Castelcerf, où le roi subtil ambitionne de faire de lui son assassin personnel. Mais pour survivre, et avant même d'apprendre à manier la lame, il lui faudra faire preuve d'une connaissance parfaite des arcanes de la politique.",
       'https://static.fnac-static.com/multimedia/Images/FR/NR/33/1b/55/5577523/1540-1/tsp20160704172754/Premiere-epoque.jpg'
     ),
+    new Book(
+      "Harry Potter à l'Ecole des Sorciers",
+      1997,
+      'Fantastique',
+      false,
+      false,
+      "Le jour de ses onze ans, Harry Potter, un orphelin élevé par un oncle et une tante qui le détestent, voit son existence bouleversée. Un géant nommé Hagrid vient le chercher pour l'emmener à Poudlard, une école de sorcellerie ! Voler en balai, jeter des sorts, combattre les trolls : Harry se révèle un sorcier doué. Mais quel est le mystère qui l'entoure ? Et qui est l'effroyable V..., le mage dont personne n'ose prononcer le nom ?",
+      'https://images-na.ssl-images-amazon.com/images/I/51819dyF6gL._SX336_BO1,204,203,200_.jpg'
+    ),
   ];
 
   getBooks(): Book[] {

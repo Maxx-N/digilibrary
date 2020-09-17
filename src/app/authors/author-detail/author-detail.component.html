@@ -6,9 +6,8 @@
     </div>
     <p class="font-italic font-weight-light">{{ author.nationality }}</p>
 
-    <!-- <div class="h6 font-weight-bold">Livres</div> -->
     <ul class="list-group">
-        <li class="list-group-item" *ngFor="let book of sortedAuthorSBooks" style="cursor: pointer" (click)="onDisplayBook(book)">
+        <li class="list-group-item blue-on-over pointer" *ngFor="let book of sortedAuthorSBooks" (click)="onDisplayBook(book)">
             {{ book.title }} ({{ book.year }})
         </li>
     </ul>

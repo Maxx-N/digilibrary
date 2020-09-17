@@ -80,4 +80,14 @@ export class AuthorsService {
       this.isEditingAuthorSubject.next(false);
     }
   }
+
+  removeBookFromItsAuthor(book: Book) {
+    const author = this.authors.find((author) => {
+      return author.books.includes(book);
+    });
+
+    if (author) {
+      author.books.splice(author.books.indexOf(book), 1);
+    }
+  }
 }
