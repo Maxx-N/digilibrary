@@ -103,20 +103,33 @@ export class BooksService {
     this.isEditingSubject.next(false);
   }
 
+  setUpdateMode(bool: boolean) {
+    this.updateMode = bool;
+    this.updateModeSubject.next(bool);
+  }
+
   addBook(book: Book): void {
     this.books.push(book);
     this.sortedBooksSubject.next(this.getBooksChronologically());
     this.readingListSubject.next(this.getBooksToRead());
   }
 
-  updateBook(book : Book) {
+  updateBook(book: Book) {
     this.books[this.books.indexOf(this.selectedBook)] = book;
     this.sortedBooksSubject.next(this.getBooksChronologically());
     this.readingListSubject.next(this.getBooksToRead());
   }
 
-  setUpdateMode(bool: boolean) {
-    this.updateMode = bool;
-    this.updateModeSubject.next(bool);
+  deleteBook(book: Book) {
+    if (
+      confirm(
+        `Le livre \"${book.title}\" va être définitivement supprimé. \n\nVoulez-vous continuer?`
+      )
+    ) {
+      this.books.splice(this.books.indexOf(book), 1);
+      this.sortedBooksSubject.next(this.getBooksChronologically());
+      this.readingListSubject.next(this.getBooksToRead());
+      this.unselectBook();
+    }
   }
 }

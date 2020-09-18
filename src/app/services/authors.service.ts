@@ -88,7 +88,9 @@ export class AuthorsService {
   }
 
   removeBookFromItsAuthor(author: Author, book: Book) {
-    author.books.splice(author.books.indexOf(book), 1);
+    if (author) {
+      author.books.splice(author.books.indexOf(book), 1);
+    }
   }
 
   setEditMode(bool: boolean): void {

@@ -55,8 +55,13 @@ export class BookDetailComponent implements OnInit {
     this.booksService.toggleReadingList(this.book);
   }
 
-  onUpdateBook() : void {
+  onUpdateBook(): void {
     this.booksService.setUpdateMode(true);
     this.booksService.startEditing();
+  }
+
+  onDeleteBook(): void {
+    this.authorsService.removeBookFromItsAuthor(this.author, this.book);
+    this.booksService.deleteBook(this.book);
   }
 }
