@@ -1,6 +1,9 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="text-center">
-        <button class="btn btn-success" type="submit" [disabled]="!this.form.valid">Ajouter</button>
+        <button class="btn btn-success" type="submit" [disabled]="!this.form.valid">
+          <span *ngIf="!updateMode">Ajouter</span>
+          <span *ngIf="updateMode">Modifier</span>
+        </button>
     </div>
     <div class="hr"></div>
     <div *ngIf="form.value.imageUrl">

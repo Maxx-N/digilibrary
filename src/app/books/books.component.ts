@@ -44,6 +44,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   onAddBook(): void {
+    this.booksService.setUpdateMode(false);
     this.booksService.startEditing();
     this.booksService.unselectBook();
   }

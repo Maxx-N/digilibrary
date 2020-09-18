@@ -54,4 +54,9 @@ export class BookDetailComponent implements OnInit {
   onToggleReadingList(): void {
     this.booksService.toggleReadingList(this.book);
   }
+
+  onUpdateBook() : void {
+    this.booksService.setUpdateMode(true);
+    this.booksService.startEditing();
+  }
 }

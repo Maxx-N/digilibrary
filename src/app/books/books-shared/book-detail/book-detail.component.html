@@ -11,17 +11,21 @@
   <p class="font-italic font-weight-light">
     {{ book.year }}
   </p>
+<div class="d-flex justify-content-around">
   <button
     class="btn btn-margin-bottom"
-    [ngClass]="{ 'btn-info': !book.isToRead, 'btn-danger': book.isToRead }"
+    [ngClass]="{ 'btn-info': !book.isToRead, 'btn-warning': book.isToRead }"
     (click)="onToggleReadingList()"
   >
     <span *ngIf="!book.isToRead"> Ajouter à ma liste </span>
         <span *ngIf="book.isToRead">Retirer de ma liste</span>
         </button>
-
-        <article>
-            <p>{{ book.category }}</p>
-            <p class="text-justify">{{ book.synopsis }}</p>
-        </article>
+        <button class="btn btn-secondary btn-margin-bottom" (click)="onUpdateBook()">
+    Modifier
+  </button>
+</div>
+<article>
+    <p>{{ book.category }}</p>
+    <p class="text-justify">{{ book.synopsis }}</p>
+</article>
 </div>

@@ -11,6 +11,8 @@ export class BooksService {
   isEditing: boolean = false;
   isEditingSubject: Subject<boolean> = new Subject<boolean>();
   sortedBooksSubject: Subject<Book[]> = new Subject<Book[]>();
+  updateMode: boolean = false;
+  updateModeSubject: Subject<boolean> = new Subject<boolean>();
 
   private books: Book[] = [
     new Book(
@@ -105,5 +107,16 @@ export class BooksService {
     this.books.push(book);
     this.sortedBooksSubject.next(this.getBooksChronologically());
     this.readingListSubject.next(this.getBooksToRead());
+  }
+
+  updateBook(book : Book) {
+    this.books[this.books.indexOf(this.selectedBook)] = book;
+    this.sortedBooksSubject.next(this.getBooksChronologically());
+    this.readingListSubject.next(this.getBooksToRead());
+  }
+
+  setUpdateMode(bool: boolean) {
+    this.updateMode = bool;
+    this.updateModeSubject.next(bool);
   }
 }

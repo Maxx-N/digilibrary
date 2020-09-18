@@ -39,6 +39,7 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.editModeSubscription.unsubscribe();
+    this.authorsService.stopEditingAuthor();
   }
 
   initForm(): void {
