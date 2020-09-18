@@ -3,7 +3,9 @@
 
     <div class="text-center">
         <button [disabled]="!form.valid" class="btn btn-success" type="submit">
-      Ajouter
+      <span *ngIf="!editMode">Ajouter</span>
+      <span *ngIf="editMode">Modifier</span>
+
     </button>
     </div>
     <div class="form-group">
@@ -25,7 +27,7 @@
 
     <div class="text-center">
         <button type="button" class="btn btn-info" (click)="onAddBookControl()">
-      Attribuer un livre existant
+      Ajouter un livre
     </button>
     </div>
     <div formArrayName="booksIndexes">

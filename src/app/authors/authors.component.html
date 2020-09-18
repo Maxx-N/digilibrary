@@ -10,7 +10,7 @@
     <div class="col-md-7">
         <div *ngIf="selectedAuthor || isEditingAuthor; else noAuthorSelected">
             <app-author-detail *ngIf="selectedAuthor && !isEditingAuthor"></app-author-detail>
-            <app-author-edit *ngIf="!!isEditingAuthor"></app-author-edit>
+            <app-author-edit *ngIf="isEditingAuthor"></app-author-edit>
         </div>
         <ng-template #noAuthorSelected>
             <p style="margin-top: 20%" class="text-center font-italic">

@@ -4,7 +4,7 @@
     <div class="h3 font-weight-bold">{{ book.title }}</div>
     <p *ngIf="author">
         de
-        <span (click)="onDisplayBookAuthor()" class="font-weight-bold pointer">
+        <span (click)="onDisplayBookAuthor()" class="font-weight-bold pointer text-info">
       {{ author.firstName }} {{ author.lastName }}</span
     >
   </p>
@@ -12,8 +12,8 @@
     {{ book.year }}
   </p>
   <button
-    class="btn"
-    [ngClass]="{ 'btn-info': !book.isToRead, 'btn-danger': !!book.isToRead }"
+    class="btn btn-margin-bottom"
+    [ngClass]="{ 'btn-info': !book.isToRead, 'btn-danger': book.isToRead }"
     (click)="onToggleReadingList()"
   >
     <span *ngIf="!book.isToRead"> Ajouter à ma liste </span>

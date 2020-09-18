@@ -12,6 +12,9 @@ export class AuthorsService {
   isEditingAuthor: boolean = false;
   isEditingAuthorSubject: Subject<boolean> = new Subject<boolean>();
   sortedAuthorsListSubject: Subject<Author[]> = new Subject<Author[]>();
+  editMode: boolean = false;
+  editModeSubject: Subject<boolean> = new Subject<boolean>();
+  authorToUpdate: Author;
 
   private books: Book[] = this.booksService.getBooks();
   private authors: Author[] = [
@@ -59,6 +62,11 @@ export class AuthorsService {
     this.sortedAuthorsListSubject.next(this.getSortedAuthors());
   }
 
+  updateAuthor(author): void {
+    this.authors[this.authors.indexOf(this.selectedAuthor)] = author;
+    this.sortedAuthorsListSubject.next(this.getSortedAuthors());
+  }
+
   selectAuthor(author: Author): void {
     this.selectedAuthor = author;
     this.selectedAuthorSubject.next(author);
@@ -75,13 +83,16 @@ export class AuthorsService {
   }
 
   stopEditingAuthor(): void {
-    if (this.selectedAuthor) {
       this.isEditingAuthor = false;
       this.isEditingAuthorSubject.next(false);
-    }
   }
 
   removeBookFromItsAuthor(author: Author, book: Book) {
     author.books.splice(author.books.indexOf(book), 1);
+  }
+
+  setEditMode(bool: boolean): void {
+    this.editMode = bool;
+    this.editModeSubject.next(bool);
   }
 }

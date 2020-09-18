@@ -24,6 +24,7 @@ export class AuthorsComponent implements OnInit {
   }
 
   onAddAuthor(): void {
+    this.authorsService.setEditMode(false);
     this.authorsService.startEditingAuthor();
     this.authorsService.unselectAuthor();
   }

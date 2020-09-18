@@ -40,8 +40,14 @@ export class AuthorDetailComponent implements OnInit {
     });
   }
 
-  onDisplayBook(book: Book) {
+  onDisplayBook(book: Book): void {
     this.booksService.selectedBook = book;
     this.headerService.loadedComponentSubject.next('books');
+  }
+
+  onUpdateAuthor(): void {
+    this.authorsService.setEditMode(true);
+    this.authorsService.authorToUpdate = this.author;
+    this.authorsService.startEditingAuthor();
   }
 }

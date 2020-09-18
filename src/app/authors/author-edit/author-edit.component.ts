@@ -17,6 +17,8 @@ export class AuthorEditComponent implements OnInit {
     return (<FormArray>this.form.get('booksIndexes')).controls;
   }
   existingBooks: Book[] = this.booksService.getBooksChronologically();
+  editMode: boolean = this.authorsService.editMode;
+  authorToUpdate = this.authorsService.authorToUpdate;
 
   constructor(
     private authorsService: AuthorsService,
@@ -25,25 +27,54 @@ export class AuthorEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.authorsService.editModeSubject.subscribe((mode) => {
+      this.editMode = mode;
+      this.initForm();
+    });
   }
 
   initForm(): void {
-    this.form = new FormGroup({
-      firstName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(2),
-      ]),
-      lastName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      nationality: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      imageUrl: new FormControl(''),
-      booksIndexes: new FormArray([]),
-    });
+    if (!this.editMode) {
+      this.form = new FormGroup({
+        firstName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        lastName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        nationality: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        imageUrl: new FormControl(''),
+        booksIndexes: new FormArray([]),
+      });
+    } else {
+      this.form = new FormGroup({
+        firstName: new FormControl(this.authorToUpdate.firstName, [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        lastName: new FormControl(this.authorToUpdate.lastName, [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        nationality: new FormControl(this.authorToUpdate.nationality, [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        imageUrl: new FormControl(this.authorToUpdate.imageUrl),
+        booksIndexes: new FormArray([]),
+      });
+
+      this.authorToUpdate.books.forEach((book) => {
+        (<FormArray>this.form.get('booksIndexes')).push(
+          new FormControl(this.existingBooks.indexOf(book), Validators.required)
+        );
+      });
+    }
   }
 
   setAuthorBooks(): Book[] {
@@ -57,7 +88,7 @@ export class AuthorEditComponent implements OnInit {
           .find((author) => {
             return author.books.includes(book);
           });
-        if (authorToReplace) {
+        if (authorToReplace && this.authorToUpdate != authorToReplace) {
           if (
             confirm(
               `Le livre \"${book.title}\" a déjà un auteur (${authorToReplace.firstName} ${authorToReplace.lastName}). Voulez-vous le remplacer?`
@@ -78,7 +109,6 @@ export class AuthorEditComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid) {
       const authorBooks = this.setAuthorBooks();
-
       const author = new Author(
         this.form.value.firstName,
         this.form.value.lastName,
@@ -87,9 +117,15 @@ export class AuthorEditComponent implements OnInit {
         this.form.value.imageUrl
       );
 
-      this.authorsService.addAuthor(author);
+      if (!this.editMode) {
+        this.authorsService.addAuthor(author);
+      } else {
+        this.authorsService.updateAuthor(author);
+      }
 
-      this.initForm();
+      this.authorsService.selectAuthor(author);
+      this.authorsService.setEditMode(false);
+      this.authorsService.stopEditingAuthor();
     } else {
       alert('Formulaire invalide');
     }
