@@ -6,15 +6,24 @@
 
 <div class="row">
     <div class="col-md-5">
+        <div class="text-center">
+            <button class="btn btn-info" (click)="onAddBook()">
+    Ajouter un livre
+  </button>
+        </div>
         <app-books-list *ngIf="booksToLoad === 'Tous'"></app-books-list>
         <app-reading-list *ngIf="booksToLoad === 'A lire'"></app-reading-list>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-7" *ngIf="!isEditing">
         <app-book-detail *ngIf="selectedBook; else noBookSelected"></app-book-detail>
         <ng-template #noBookSelected>
             <p style="margin-top: 20%" class="text-center font-italic">
-                Sélectionnez un livre ...
+                Sélectionnez ou ajoutez un livre ...
             </p>
         </ng-template>
     </div>
+    <div class="col-md-7" *ngIf="isEditing">
+        <app-book-edit></app-book-edit>
+    </div>
+
 </div>

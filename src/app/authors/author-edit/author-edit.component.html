@@ -1,51 +1,67 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <img *ngIf="form.value.imageUrl" class="img-center tiny-img" [src]="form.value.imageUrl" alt="Aucune image ne correspond à cette URL" />
-
     <div class="text-center">
         <button [disabled]="!form.valid" class="btn btn-success" type="submit">
       <span *ngIf="!editMode">Ajouter</span>
       <span *ngIf="editMode">Modifier</span>
     </button>
     </div>
+    <div class="hr"></div>
+
+    <div *ngIf="form.value.imageUrl">
+        <img class="img-center tiny-img" [src]="form.value.imageUrl" alt="Aucune image ne correspond à cette URL" />
+    </div>
+
+    <div class="form-group">
+        <label for="image-url">Photo (URL)</label>
+        <input id="image-url" type="text" class="form-control" formControlName="imageUrl" />
+    </div>
+
+    <div class="hr"></div>
+
     <div class="form-group">
         <label for="first-name">Prénom</label>
         <input id="first-name" type="text" class="form-control" formControlName="firstName" />
     </div>
+
     <div class="form-group">
         <label for="last-name">Nom</label>
         <input id="last-name" type="text" class="form-control" formControlName="lastName" />
     </div>
+
+    <div class="hr"></div>
+
     <div class="form-group">
         <label for="nationality">Pays</label>
         <input id="nationality" type="text" class="form-control" formControlName="nationality" />
     </div>
-    <div class="form-group">
-        <label for="image-url">URL de la photo</label>
-        <input id="image-url" type="text" class="form-control" formControlName="imageUrl" />
-    </div>
 
-    <div class="text-center">
-        <button type="button" class="btn btn-info" (click)="onAddBookControl()">
-      Ajouter un livre
-    </button>
-    </div>
-    <div formArrayName="booksIndexes">
-        <div class="form-group" *ngFor="let bookControl of booksControls; let i = index">
-            <div class="row">
-                <div class="col-xs-10">
-                    <select id="books" class="form-control" [formControlName]="i">
-            <option
-              *ngFor="let book of existingBooks"
-              [value]="existingBooks.indexOf(book)"
-            >
-              {{ book.title }} ({{ book.category }}, {{ book.year }})
-            </option>
-          </select>
-                </div>
-                <div class="col-xs-2" style="margin-left: 4%">
-                    <button class="btn btn-danger" (click)="onRemoveBookControl(i)">
-            X
-          </button>
+    <div class="hr"></div>
+
+    <div>
+        <label for="books">Livres</label>
+        <div class="text-center">
+            <button type="button" class="btn btn-info" (click)="onAddBookControl()">
+        Ajouter un livre
+      </button>
+        </div>
+        <div formArrayName="booksIndexes">
+            <div *ngFor="let bookControl of booksControls; let i = index">
+                <div class="row">
+                    <div class="col-xs-10 form-group">
+                        <select id="books" [formControlName]="i" class="form-control">
+              <option
+                *ngFor="let book of existingBooks"
+                [value]="existingBooks.indexOf(book)"
+              >
+                {{ book.title }} ({{ book.category }}, {{ book.year }})
+              </option>
+            </select>
+                    </div>
+                    <div class="col-xs-2" style="margin-left: 4%">
+                        <button class="btn btn-danger" (click)="onRemoveBookControl(i)">
+              X
+            </button>
+                    </div>
                 </div>
             </div>
         </div>

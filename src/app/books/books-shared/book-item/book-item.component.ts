@@ -37,7 +37,7 @@ export class BookItemComponent implements OnInit {
   }
 
   onSelectBook(): void {
-    this.booksService.selectedBook = this.book;
-    this.booksService.selectedBookSubject.next(this.book);
+    this.booksService.selectBook(this.book);
+    this.booksService.stopEditing();
   }
 }

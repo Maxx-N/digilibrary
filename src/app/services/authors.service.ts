@@ -109,4 +109,9 @@ export class AuthorsService {
       }
     }
   }
+
+  addBookToAuthor(book: Book, author: Author) {
+    this.authors[this.authors.indexOf(author)].books.push(book);
+    this.sortedAuthorsListSubject.next(this.getSortedAuthors());
+  }
 }

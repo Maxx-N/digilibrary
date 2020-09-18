@@ -8,6 +8,9 @@ export class BooksService {
   selectedBook: Book;
   selectedBookSubject: Subject<Book> = new Subject<Book>();
   readingListSubject: Subject<Book[]> = new Subject<Book[]>();
+  isEditing: boolean = false;
+  isEditingSubject: Subject<boolean> = new Subject<boolean>();
+  sortedBooksSubject: Subject<Book[]> = new Subject<Book[]>();
 
   private books: Book[] = [
     new Book(
@@ -69,12 +72,38 @@ export class BooksService {
 
   getBooksToRead(): Book[] {
     return this.getBooksChronologically().filter((book) => {
-      return !!book.isToRead;
+      return book.isToRead;
     });
   }
 
   toggleReadingList(book: Book): void {
     book.isToRead = !book.isToRead;
+    this.readingListSubject.next(this.getBooksToRead());
+  }
+
+  selectBook(book: Book): void {
+    this.selectedBook = book;
+    this.selectedBookSubject.next(book);
+  }
+
+  unselectBook(): void {
+    this.selectedBook = null;
+    this.selectedBookSubject.next(null);
+  }
+
+  startEditing(): void {
+    this.isEditing = true;
+    this.isEditingSubject.next(true);
+  }
+
+  stopEditing(): void {
+    this.isEditing = false;
+    this.isEditingSubject.next(false);
+  }
+
+  addBook(book: Book): void {
+    this.books.push(book);
+    this.sortedBooksSubject.next(this.getBooksChronologically());
     this.readingListSubject.next(this.getBooksToRead());
   }
 }
