@@ -50,4 +50,8 @@ export class AuthorDetailComponent implements OnInit {
     this.authorsService.authorToUpdate = this.author;
     this.authorsService.startEditingAuthor();
   }
+
+  onDeleteAuthor(): void {
+    this.authorsService.deleteAuthor(this.author);
+  }
 }

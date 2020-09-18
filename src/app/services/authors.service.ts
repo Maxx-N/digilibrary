@@ -83,8 +83,8 @@ export class AuthorsService {
   }
 
   stopEditingAuthor(): void {
-      this.isEditingAuthor = false;
-      this.isEditingAuthorSubject.next(false);
+    this.isEditingAuthor = false;
+    this.isEditingAuthorSubject.next(false);
   }
 
   removeBookFromItsAuthor(author: Author, book: Book) {
@@ -94,5 +94,19 @@ export class AuthorsService {
   setEditMode(bool: boolean): void {
     this.editMode = bool;
     this.editModeSubject.next(bool);
+  }
+
+  deleteAuthor(author: Author) {
+    if (
+      confirm(
+        `Vous êtes sur le point de supprimer ${author.firstName} ${author.lastName} de la liste des auteurs. \nCette opération est irréversible. \n\nÊtes vous sûr(e) de vouloir continuer ?`
+      )
+    ) {
+      this.authors.splice(this.authors.indexOf(author), 1);
+      this.sortedAuthorsListSubject.next(this.getSortedAuthors());
+      if (this.selectedAuthor === author) {
+        this.unselectAuthor();
+      }
+    }
   }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { Author } from 'src/app/models/author.model';
 import { Book } from 'src/app/models/book.model';
@@ -11,7 +12,7 @@ import { BooksService } from 'src/app/services/books.service';
   templateUrl: './author-edit.component.html',
   styleUrls: ['./author-edit.component.scss'],
 })
-export class AuthorEditComponent implements OnInit {
+export class AuthorEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
   get booksControls() {
     return (<FormArray>this.form.get('booksIndexes')).controls;
@@ -19,6 +20,7 @@ export class AuthorEditComponent implements OnInit {
   existingBooks: Book[] = this.booksService.getBooksChronologically();
   editMode: boolean = this.authorsService.editMode;
   authorToUpdate = this.authorsService.authorToUpdate;
+  editModeSubscription: Subscription;
 
   constructor(
     private authorsService: AuthorsService,
@@ -27,10 +29,16 @@ export class AuthorEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.authorsService.editModeSubject.subscribe((mode) => {
-      this.editMode = mode;
-      this.initForm();
-    });
+    this.editModeSubscription = this.authorsService.editModeSubject.subscribe(
+      (mode) => {
+        this.editMode = mode;
+        this.initForm();
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.editModeSubscription.unsubscribe();
   }
 
   initForm(): void {

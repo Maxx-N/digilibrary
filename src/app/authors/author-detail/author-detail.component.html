@@ -7,7 +7,7 @@
     <p class="font-italic font-weight-light">{{ author.nationality }}</p>
 
     <div class="text-center">
-        <button class="btn btn-secondary" (click)="onUpdateAuthor()">Modifier cet auteur</button>
+        <button class="btn btn-secondary" (click)="onUpdateAuthor()">Modifier l'auteur</button>
     </div>
 
     <ul class="list-group">
@@ -15,4 +15,6 @@
             {{ book.title }} ({{ book.year }})
         </li>
     </ul>
+
+    <button class="btn btn-danger" (click)="onDeleteAuthor()">Supprimer l'auteur</button>
 </div>
