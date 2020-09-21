@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Author } from 'src/app/models/author.model';
+import { Router } from '@angular/router';
 
 import { Book } from 'src/app/models/book.model';
 import { BooksService } from 'src/app/services/books.service';
 import { AuthorsService } from 'src/app/services/authors.service';
-import { HeaderService } from 'src/app/services/header.service';
+// import { HeaderService } from 'src/app/services/header.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -18,7 +19,8 @@ export class BookDetailComponent implements OnInit {
   constructor(
     private booksService: BooksService,
     private authorsService: AuthorsService,
-    private headerService: HeaderService
+    // private headerService: HeaderService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,8 +48,9 @@ export class BookDetailComponent implements OnInit {
   }
 
   onDisplayBookAuthor() {
-    this.headerService.loadedComponentSubject.next('authors');
+    // this.headerService.loadedComponentSubject.next('authors');
     this.authorsService.selectedAuthor = this.author;
+    this.router.navigate(['authors']);
     // this.authorsService.selectedAuthorSubject.next(this.author);
   }
 

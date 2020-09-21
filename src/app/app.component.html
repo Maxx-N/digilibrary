@@ -1,5 +1,6 @@
 <app-header></app-header>
 <div class="smaller-box">
-    <app-authors *ngIf="loadedComponent === 'authors'"></app-authors>
-    <app-books *ngIf="loadedComponent === 'books'"></app-books>
+    <router-outlet></router-outlet>
+    <!-- <app-authors *ngIf="loadedComponent === 'authors'"></app-authors>
+    <app-books *ngIf="loadedComponent === 'books'"></app-books> -->
 </div>

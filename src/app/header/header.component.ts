@@ -9,17 +9,17 @@ import { HeaderService } from '../services/header.service';
 })
 export class HeaderComponent implements OnInit {
   collapsed = true;
-  loadedComponent: string = this.headerService.loadedComponent;
+  // loadedComponent: string = this.headerService.loadedComponent;
 
   constructor(private headerService: HeaderService) {}
 
   ngOnInit(): void {
-    this.headerService.loadedComponentSubject.subscribe((component) => {
-      this.loadedComponent = component;
-    });
+    // this.headerService.loadedComponentSubject.subscribe((component) => {
+    //   this.loadedComponent = component;
+    // });
   }
 
-  onSelectComponent(component: string) {
-    this.headerService.loadedComponentSubject.next(component);
-  }
+  // onSelectComponent(component: string) {
+  //   this.headerService.loadedComponentSubject.next(component);
+  // }
 }
