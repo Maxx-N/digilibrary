@@ -11,7 +11,7 @@
     </div>
 
     <ul class="list-group">
-        <li class="list-group-item blue-on-over pointer text-info" *ngFor="let book of sortedAuthorSBooks" (click)="onDisplayBook(book)">
+        <li class="list-group-item blue-on-over pointer text-info" *ngFor="let book of sortedAuthorSBooks" routerLink="/books/{{book.id}}">
             {{ book.title }} ({{ book.year }})
         </li>
     </ul>

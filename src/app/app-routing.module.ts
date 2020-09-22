@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthorDetailComponent } from './authors/author-detail/author-detail.component';
 import { AuthorEditComponent } from './authors/author-edit/author-edit.component';
 import { AuthorsComponent } from './authors/authors.component';
+import { BookDetailComponent } from './books/books-shared/book-detail/book-detail.component';
+import { BookEditComponent } from './books/books-shared/book-edit/book-edit.component';
 import { BooksComponent } from './books/books.component';
 
 const appRoutes: Routes = [
@@ -23,6 +25,11 @@ const appRoutes: Routes = [
   {
     path: 'books',
     component: BooksComponent,
+    children : [
+      {path: 'new', component : BookEditComponent},
+      {path: ':id', component : BookDetailComponent},
+      {path: ':id/edit', component : BookEditComponent},
+    ]
   },
 ];
 

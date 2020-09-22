@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AuthorsService } from 'src/app/services/authors.service';
 import { BooksService } from 'src/app/services/books.service';
@@ -16,27 +17,28 @@ export class BookEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
   yearsArray: number[] = [];
   availableAuthors: Author[] = this.authorsService.getSortedAuthors();
-  updateMode: boolean = this.booksService.updateMode;
+  updateMode: boolean = false;
   updateModeSubscription: Subscription;
+  bookToUpdate: Book;
 
   constructor(
     private booksService: BooksService,
-    private authorsService: AuthorsService
+    private authorsService: AuthorsService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.updateModeSubscription = this.booksService.updateModeSubject.subscribe(
-      (bool) => {
-        this.updateMode = bool;
+    this.setYearsArray();
+    this.updateModeSubscription = this.route.params.subscribe(
+      (params: Params) => {
+        this.updateMode = !!params['id'];
         this.initForm();
       }
     );
-    this.setYearsArray();
-    this.initForm();
   }
 
   ngOnDestroy(): void {
-    this.booksService.stopEditing();
     this.updateModeSubscription.unsubscribe();
   }
 
@@ -70,30 +72,35 @@ export class BookEditComponent implements OnInit, OnDestroy {
   }
 
   initUpdatingForm(): void {
-    const bookToUpdate: Book = this.booksService.selectedBook;
+    this.bookToUpdate = this.booksService.getBook(
+      +this.route.snapshot.params['id']
+    );
     const bookToUpdateAuthorIndex = this.availableAuthors.indexOf(
       this.availableAuthors.find((author) => {
-        return author.books.includes(bookToUpdate);
+        return author.books.includes(this.bookToUpdate);
       })
     );
 
     this.form = new FormGroup({
-      title: new FormControl(bookToUpdate.title, [
+      title: new FormControl(this.bookToUpdate.title, [
         Validators.required,
         Validators.minLength(2),
       ]),
       authorIndex: new FormControl(bookToUpdateAuthorIndex),
-      year: new FormControl(bookToUpdate.year.toString(), Validators.required),
-      category: new FormControl(bookToUpdate.category, [
+      year: new FormControl(
+        this.bookToUpdate.year.toString(),
+        Validators.required
+      ),
+      category: new FormControl(this.bookToUpdate.category, [
         Validators.required,
         Validators.minLength(3),
       ]),
-      isToRead: new FormControl(bookToUpdate.isToRead),
-      synopsis: new FormControl(bookToUpdate.synopsis, [
+      isToRead: new FormControl(this.bookToUpdate.isToRead),
+      synopsis: new FormControl(this.bookToUpdate.synopsis, [
         Validators.required,
         Validators.minLength(20),
       ]),
-      imageUrl: new FormControl(bookToUpdate.imageUrl),
+      imageUrl: new FormControl(this.bookToUpdate.imageUrl),
     });
   }
 
@@ -119,26 +126,23 @@ export class BookEditComponent implements OnInit, OnDestroy {
 
       if (this.updateMode) {
         const previousAuthor = this.availableAuthors.find((author) => {
-          return author.books.includes(this.booksService.selectedBook);
+          return author.books.includes(this.bookToUpdate);
         });
         if (previousAuthor) {
           this.authorsService.removeBookFromItsAuthor(
             previousAuthor,
-            this.booksService.selectedBook
+            this.bookToUpdate
           );
         }
       }
 
       if (this.updateMode) {
-        this.booksService.updateBook(book);
+        this.booksService.updateBook(this.bookToUpdate, book);
+        this.router.navigate(['..'], { relativeTo: this.route });
       } else {
         this.booksService.addBook(book);
+        this.router.navigate(['..', book.id], { relativeTo: this.route });
       }
-      this.booksService.selectBook(book);
-
-      this.booksService.setUpdateMode(false);
-
-      this.booksService.stopEditing();
     } else {
       alert('Formulaire invalide.');
     }

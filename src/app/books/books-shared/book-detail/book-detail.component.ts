@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Author } from 'src/app/models/author.model';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { Author } from 'src/app/models/author.model';
 import { Book } from 'src/app/models/book.model';
 import { BooksService } from 'src/app/services/books.service';
 import { AuthorsService } from 'src/app/services/authors.service';
@@ -17,15 +18,17 @@ export class BookDetailComponent implements OnInit {
   constructor(
     private booksService: BooksService,
     private authorsService: AuthorsService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.book = this.booksService.selectedBook;
+    this.book = this.booksService.getBook(+this.route.params['id']);
     this.author = this.getBookAuthor(this.book);
 
-    this.booksService.selectedBookSubject.subscribe((book) => {
-      this.book = book;
-      this.author = this.getBookAuthor(book);
+    this.route.params.subscribe((params: Params) => {
+      this.book = this.booksService.getBook(+params['id']);
+      this.author = this.getBookAuthor(this.book);
     });
   }
 
@@ -47,13 +50,9 @@ export class BookDetailComponent implements OnInit {
     this.booksService.toggleReadingList(this.book);
   }
 
-  onUpdateBook(): void {
-    this.booksService.setUpdateMode(true);
-    this.booksService.startEditing();
-  }
-
   onDeleteBook(): void {
     this.authorsService.removeBookFromItsAuthor(this.author, this.book);
     this.booksService.deleteBook(this.book);
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 }

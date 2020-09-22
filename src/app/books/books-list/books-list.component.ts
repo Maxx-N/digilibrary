@@ -10,12 +10,13 @@ import { BooksService } from 'src/app/services/books.service';
   styleUrls: ['./books-list.component.scss'],
 })
 export class BooksListComponent implements OnInit, OnDestroy {
-  books: Book[] = this.booksService.getBooksChronologically();
+  books: Book[];
   sortedBooksSubscription: Subscription;
 
   constructor(private booksService: BooksService) {}
 
   ngOnInit(): void {
+    this.books = this.booksService.getBooksChronologically();
     this.sortedBooksSubscription = this.booksService.sortedBooksSubject.subscribe(
       (books) => {
         this.books = books;
@@ -23,7 +24,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() : void {
+  ngOnDestroy(): void {
     this.sortedBooksSubscription.unsubscribe();
   }
 }

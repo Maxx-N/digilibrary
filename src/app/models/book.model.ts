@@ -1,14 +1,14 @@
-import {Author} from './author.model';
+import { Author } from './author.model';
 
 export class Book {
-constructor (
-  public title : string,
-  public year : number,
-  public category : string,
-  public isToRead : boolean,
-  public isFinished : boolean,
-  public synopsis : string,
-  public imageUrl : string,
-
-) {}
+  id: number;
+  constructor(
+    public title: string,
+    public year: number,
+    public category: string,
+    public isToRead: boolean,
+    public isFinished: boolean,
+    public synopsis: string,
+    public imageUrl: string
+  ) {}
 }

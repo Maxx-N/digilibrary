@@ -5,14 +5,8 @@ import { Book } from '../models/book.model';
 
 @Injectable({ providedIn: 'root' })
 export class BooksService {
-  selectedBook: Book;
-  selectedBookSubject: Subject<Book> = new Subject<Book>();
   readingListSubject: Subject<Book[]> = new Subject<Book[]>();
-  isEditing: boolean = false;
-  isEditingSubject: Subject<boolean> = new Subject<boolean>();
   sortedBooksSubject: Subject<Book[]> = new Subject<Book[]>();
-  updateMode: boolean = false;
-  updateModeSubject: Subject<boolean> = new Subject<boolean>();
 
   private books: Book[] = [
     new Book(
@@ -63,6 +57,9 @@ export class BooksService {
   ];
 
   getBooks(): Book[] {
+    for (let book of this.books) {
+      book.id = this.books.indexOf(book) + 1;
+    }
     return this.books.slice();
   }
 
@@ -78,34 +75,13 @@ export class BooksService {
     });
   }
 
+  getBook(id: number) {
+    return this.getBooks()[id - 1];
+  }
+
   toggleReadingList(book: Book): void {
     book.isToRead = !book.isToRead;
     this.readingListSubject.next(this.getBooksToRead());
-  }
-
-  selectBook(book: Book): void {
-    this.selectedBook = book;
-    this.selectedBookSubject.next(book);
-  }
-
-  unselectBook(): void {
-    this.selectedBook = null;
-    this.selectedBookSubject.next(null);
-  }
-
-  startEditing(): void {
-    this.isEditing = true;
-    this.isEditingSubject.next(true);
-  }
-
-  stopEditing(): void {
-    this.isEditing = false;
-    this.isEditingSubject.next(false);
-  }
-
-  setUpdateMode(bool: boolean) {
-    this.updateMode = bool;
-    this.updateModeSubject.next(bool);
   }
 
   addBook(book: Book): void {
@@ -114,8 +90,8 @@ export class BooksService {
     this.readingListSubject.next(this.getBooksToRead());
   }
 
-  updateBook(book: Book) {
-    this.books[this.books.indexOf(this.selectedBook)] = book;
+  updateBook(formerBook : Book, newBook: Book) {
+    this.books[formerBook.id - 1] = newBook;
     this.sortedBooksSubject.next(this.getBooksChronologically());
     this.readingListSubject.next(this.getBooksToRead());
   }
@@ -129,7 +105,6 @@ export class BooksService {
       this.books.splice(this.books.indexOf(book), 1);
       this.sortedBooksSubject.next(this.getBooksChronologically());
       this.readingListSubject.next(this.getBooksToRead());
-      this.unselectBook();
     }
   }
 }

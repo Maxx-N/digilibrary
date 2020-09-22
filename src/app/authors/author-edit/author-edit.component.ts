@@ -132,11 +132,11 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
 
       if (!this.editMode) {
         this.authorsService.addAuthor(author);
+        this.router.navigate(['..', author.id], { relativeTo: this.route });
       } else {
         this.authorsService.updateAuthor(this.authorToUpdate, author);
+        this.router.navigate(['..'], { relativeTo: this.route });
       }
-
-      this.router.navigate(['..'], { relativeTo: this.route });
     } else {
       alert('Formulaire invalide');
     }

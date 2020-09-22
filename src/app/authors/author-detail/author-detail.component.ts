@@ -39,13 +39,6 @@ export class AuthorDetailComponent implements OnInit, OnDestroy {
     this.paramsSubscription.unsubscribe();
   }
 
-  onDisplayBook(book: Book): void {
-    this.booksService.selectedBook = book;
-    this.router.navigate(['books']);
-  }
-
-
-
   onDeleteAuthor(): void {
     this.authorsService.deleteAuthor(this.author);
     this.router.navigate(['']);

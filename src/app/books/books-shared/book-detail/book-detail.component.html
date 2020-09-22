@@ -20,7 +20,7 @@
       <span *ngIf="!book.isToRead"> Ajouter à ma liste </span>
         <span *ngIf="book.isToRead">Retirer de ma liste</span>
         </button>
-        <button class="btn btn-secondary btn-margin-bottom" (click)="onUpdateBook()">
+        <button class="btn btn-secondary btn-margin-bottom" routerLink="edit">
       Modifier
     </button>
 </div>

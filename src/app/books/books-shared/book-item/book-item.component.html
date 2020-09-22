@@ -1,4 +1,4 @@
-<a (click)="onSelectBook()" [ngClass]="{ active: selectedBook === book }" class="list-group-item list-group-item-action d-flex justify-content-around align-items-center pointer">
+<a [routerLink]="book.id" routerLinkActive="active" class="list-group-item list-group-item-action d-flex justify-content-around align-items-center pointer">
     <div>
         <div class="text-center list-group-item-heading font-italic font-weight-bold">
             {{ book.title }}
