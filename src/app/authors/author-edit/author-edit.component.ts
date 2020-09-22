@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Author } from 'src/app/models/author.model';
@@ -18,20 +19,24 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
     return (<FormArray>this.form.get('booksIndexes')).controls;
   }
   existingBooks: Book[] = this.booksService.getBooksChronologically();
-  editMode: boolean = this.authorsService.editMode;
-  authorToUpdate = this.authorsService.authorToUpdate;
+  editMode: boolean = false;
+  authorToUpdate: Author;
   editModeSubscription: Subscription;
 
   constructor(
     private authorsService: AuthorsService,
-    private booksService: BooksService
+    private booksService: BooksService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.initForm();
-    this.editModeSubscription = this.authorsService.editModeSubject.subscribe(
-      (mode) => {
-        this.editMode = mode;
+    this.editModeSubscription = this.route.params.subscribe(
+      (params: Params) => {
+        this.editMode = !!params['id'];
+        if (this.editMode) {
+          this.authorToUpdate = this.authorsService.getAuthor(+params['id']);
+        }
         this.initForm();
       }
     );
@@ -39,7 +44,6 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.editModeSubscription.unsubscribe();
-    this.authorsService.stopEditingAuthor();
   }
 
   initForm(): void {
@@ -129,12 +133,10 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
       if (!this.editMode) {
         this.authorsService.addAuthor(author);
       } else {
-        this.authorsService.updateAuthor(author);
+        this.authorsService.updateAuthor(this.authorToUpdate, author);
       }
 
-      this.authorsService.selectAuthor(author);
-      this.authorsService.setEditMode(false);
-      this.authorsService.stopEditingAuthor();
+      this.router.navigate(['..'], { relativeTo: this.route });
     } else {
       alert('Formulaire invalide');
     }

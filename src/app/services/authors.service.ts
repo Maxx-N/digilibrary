@@ -7,14 +7,7 @@ import { BooksService } from './books.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthorsService {
-  selectedAuthor: Author;
-  selectedAuthorSubject: Subject<Author> = new Subject<Author>();
-  isEditingAuthor: boolean = false;
-  isEditingAuthorSubject: Subject<boolean> = new Subject<boolean>();
   sortedAuthorsListSubject: Subject<Author[]> = new Subject<Author[]>();
-  editMode: boolean = false;
-  editModeSubject: Subject<boolean> = new Subject<boolean>();
-  authorToUpdate: Author;
 
   private books: Book[] = this.booksService.getBooks();
   private authors: Author[] = [
@@ -44,7 +37,14 @@ export class AuthorsService {
   constructor(private booksService: BooksService) {}
 
   getAuthors(): Author[] {
+    for (let author of this.authors) {
+      author.id = this.authors.indexOf(author) + 1;
+    }
     return this.authors.slice();
+  }
+
+  getAuthor(id: number) {
+    return this.getAuthors()[id - 1];
   }
 
   getSortedAuthors(): Author[] {
@@ -62,40 +62,15 @@ export class AuthorsService {
     this.sortedAuthorsListSubject.next(this.getSortedAuthors());
   }
 
-  updateAuthor(author): void {
-    this.authors[this.authors.indexOf(this.selectedAuthor)] = author;
+  updateAuthor(formerAuthor: Author, newAuthor: Author): void {
+    this.authors[formerAuthor.id - 1] = newAuthor;
     this.sortedAuthorsListSubject.next(this.getSortedAuthors());
-  }
-
-  selectAuthor(author: Author): void {
-    this.selectedAuthor = author;
-    this.selectedAuthorSubject.next(author);
-  }
-
-  unselectAuthor(): void {
-    this.selectedAuthor = null;
-    this.selectedAuthorSubject.next(null);
-  }
-
-  startEditingAuthor(): void {
-    this.isEditingAuthor = true;
-    this.isEditingAuthorSubject.next(true);
-  }
-
-  stopEditingAuthor(): void {
-    this.isEditingAuthor = false;
-    this.isEditingAuthorSubject.next(false);
   }
 
   removeBookFromItsAuthor(author: Author, book: Book) {
     if (author) {
       author.books.splice(author.books.indexOf(book), 1);
     }
-  }
-
-  setEditMode(bool: boolean): void {
-    this.editMode = bool;
-    this.editModeSubject.next(bool);
   }
 
   deleteAuthor(author: Author) {
@@ -106,9 +81,6 @@ export class AuthorsService {
     ) {
       this.authors.splice(this.authors.indexOf(author), 1);
       this.sortedAuthorsListSubject.next(this.getSortedAuthors());
-      if (this.selectedAuthor === author) {
-        this.unselectAuthor();
-      }
     }
   }
 
