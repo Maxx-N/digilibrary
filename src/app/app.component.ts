@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { HeaderService } from './services/header.service';
+import { DataStorageService } from './services/data-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +8,15 @@ import { HeaderService } from './services/header.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  // loadedComponent: string = this.headerService.loadedComponent;
+  constructor(private dataStorageService: DataStorageService) {}
 
-  constructor(private headerService: HeaderService) {}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    // this.headerService.loadedComponentSubject.subscribe((component) => {
-    //   this.loadedComponent = component;
-    // });
+  onStoreAuthors(): void {
+    this.dataStorageService.storeAuthors();
+  }
+
+  onFetchAuthors(): void {
+    this.dataStorageService.fetchAuthors();
   }
 }

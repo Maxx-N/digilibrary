@@ -1,20 +1,26 @@
-<img [src]="author.imageUrl" [alt]="author.lastName" class="img-center" />
-
-<div class="text-center">
-    <div class="h3 font-weight-bold">
-        {{ author.firstName }} {{ author.lastName }}
-    </div>
-    <p class="font-italic font-weight-light">{{ author.nationality }}</p>
+<div *ngIf="author">
+    <img [src]="author.imageUrl" [alt]="author.lastName" class="img-center" />
 
     <div class="text-center">
-        <button class="btn btn-secondary" routerLink="edit">Modifier l'auteur</button>
+        <div class="h3 font-weight-bold">
+            {{ author.firstName }} {{ author.lastName }}
+        </div>
+        <p class="font-italic font-weight-light">{{ author.nationality }}</p>
+
+        <div class="text-center">
+            <button class="btn btn-secondary" routerLink="edit">
+        Modifier l'auteur
+      </button>
+        </div>
+
+        <ul class="list-group">
+            <li class="list-group-item blue-on-over pointer text-info" *ngFor="let book of sortedAuthorSBooks" routerLink="/books/{{ book.id }}">
+                {{ book.title }} ({{ book.year }})
+            </li>
+        </ul>
+
+        <button class="btn btn-danger" (click)="onDeleteAuthor()">
+      Supprimer l'auteur
+    </button>
     </div>
-
-    <ul class="list-group">
-        <li class="list-group-item blue-on-over pointer text-info" *ngFor="let book of sortedAuthorSBooks" routerLink="/books/{{book.id}}">
-            {{ book.title }} ({{ book.year }})
-        </li>
-    </ul>
-
-    <button class="btn btn-danger" (click)="onDeleteAuthor()">Supprimer l'auteur</button>
 </div>

@@ -1,6 +1,8 @@
 <app-header></app-header>
+<div class="text-center">
+    <button class="btn btn-info" (click)="onStoreAuthors()">Sauvegarder</button>
+    <button class="btn btn-info" (click)="onFetchAuthors()">Récupérer</button>
+</div>
 <div class="smaller-box">
     <router-outlet></router-outlet>
-    <!-- <app-authors *ngIf="loadedComponent === 'authors'"></app-authors>
-    <app-books *ngIf="loadedComponent === 'books'"></app-books> -->
 </div>

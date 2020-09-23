@@ -57,6 +57,11 @@ export class AuthorsService {
     });
   }
 
+  setAuthors(authors: Author[]) {
+    this.authors = authors;
+    this.sortedAuthorsListSubject.next(this.getSortedAuthors());
+  }
+
   addAuthor(author: Author): void {
     this.authors.push(author);
     this.sortedAuthorsListSubject.next(this.getSortedAuthors());
@@ -87,5 +92,13 @@ export class AuthorsService {
   addBookToAuthor(book: Book, author: Author) {
     this.authors[this.authors.indexOf(author)].books.push(book);
     this.sortedAuthorsListSubject.next(this.getSortedAuthors());
+  }
+
+  findAuthorOfABook(bookId: number): Author {
+    return this.getAuthors().find((author) => {
+      return author.books.find((book) => {
+        return book.id === bookId;
+      });
+    });
   }
 }
